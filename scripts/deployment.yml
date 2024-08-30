@@ -1,1 +1,44 @@
-# Write Kubernetes Deployment Script
+#
+# To deploy:
+#
+# kubectl apply -f deploy.yaml
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-app
+  template:
+    metadata:
+      labels:
+        app: fastapi-app
+    spec:
+      containers:
+        - name: fastapi-app
+          image: fastapi-app:1
+          imagePullPolicy: Never
+          env:
+            - name: PORT
+              value: "8000"
+            - name: DATABASE_URL
+              value: "mongodb://localhost:27017/week6"
+          ports:
+            - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-service
+spec:
+  selector:
+    app: fastapi-app
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+      nodePort: 30001 # Adjust the nodePort to avoid conflicts
