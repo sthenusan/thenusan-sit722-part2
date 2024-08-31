@@ -19,13 +19,13 @@ spec:
     spec:
       containers:
         - name: fastapi-app
-          image: fastapi-app:1
+          image: book-apis:latest
           imagePullPolicy: Never
           env:
             - name: PORT
               value: "8000"
             - name: DATABASE_URL
-              value: "mongodb://localhost:27017/week6"
+              value: "postgresql://sit722_part2_1bo8_user:Y02GFVk6Eg6ATEpmdQyFMfJBBI7zgbKV@dpg-cr8kki2j1k6c73f43kv0-a.oregon-postgres.render.com/sit722_part2_1bo8"
           ports:
             - containerPort: 8000
 ---
